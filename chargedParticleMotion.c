@@ -4,19 +4,32 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
 
-//GSL - explicit RK4 
-//The simple first order differential equation to solve is y'(x)=y(x) with the initial condition y(0)=1.
+//with GSL 
+//Charged particle motion equations:
+
+//x'=u
+//y'=v
+//z'=w
+//u'=wv-u/tao
+//v'=-wu-v/tao
+//w'=-w/tao
+
+//w=5, tao=5, ICS: x_0=(0,0,0) and v_0=(20,0,2)
 
 int
 func (double t, const double y[], double f[],
       void *params)
 {
   (void)(t); /* avoid unused parameter warning */
-  (void *)(params); //ADDED
-  //double mu = *(double *)params;
-  //f[0] = y[1];
-  //f[1] = -y[0] - mu*y[1]*(y[0]*y[0] - 1);
-  f[0]=y[0]; //ADDED
+  //(void *)(params); //ADDED
+  double w = *(double *)params;
+  double tao = *(double *)params;
+  f[0] = y[3];
+  f[1] = y[4];
+  f[2] = y[5];
+  f[3] = w*y[4] - (1/tao)*y[3];
+  f[4] = -w*y[3] - (1/tao)*y[4];
+  f[5] = -(1/tao)*y[5];
   return GSL_SUCCESS;
 }
 
@@ -46,11 +59,14 @@ int
 main (void)
 {
   //double mu = 10;
-  double mu = 0; //ADDED
+  //double mu = 0; //ADDED
+  double w = 5;
+  double tao = 5;
   double e; //ADDED
   //gsl_odeiv2_system sys = { func, jac, 2, &mu };
   gsl_odeiv2_system sys = { func, jac, 1, &mu }; //ADDED
 
+  //RK4:
   gsl_odeiv2_driver *d =
     gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,
                                    1e-3, 1e-8, 1e-8);
