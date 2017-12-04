@@ -6,6 +6,7 @@
 #include <gsl/gsl_odeiv2.h>
 #include <grvy.h>
 #include "funcsandjacs.h"
+#include "probsandmethods.h"
 
 int
 main (void)
@@ -47,166 +48,37 @@ main (void)
   /*charged particle motion with explicit RK4*/
   if (problemNo == 2 && solutionMethod == 1)
   {
-  FILE *f = fopen("output.dat", "w");
-  double w = 5;
-  double tao = 5;
-  double constants[2] = {w, tao};
-  gsl_odeiv2_system sys = { func, jac, 6, &constants }; 
-  gsl_odeiv2_driver *d =
-    gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,
-                                 stepSize, 1e-8, 1e-8);
-  double t = 0.0;
-  double y[6] = { 0, 0, 0, 20, 0, 2 }; 
-  int i, s;
-  for (i = 0; i < numberofSteps; i++)
-    {
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-      if (s != GSL_SUCCESS)
-        {
-          printf ("error: driver returned %d\n", s);
-          break;
-        }
-      fprintf (f,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2], y[3], y[4], y[5]);
-    }
-  gsl_odeiv2_driver_free (d);
-  return s;
+    cpmrk4 (stepSize, numberofSteps);
   }
 
   /*charged particle motion with explicit RK(2,3)*/
   else if (problemNo == 2 && solutionMethod == 2)
   {
-  FILE *f = fopen("output.dat", "w");
-  double w = 5;
-  double tao = 5;
-  double constants[2] = {w, tao};
-  gsl_odeiv2_system sys = { func, jac, 6, &constants };
-  gsl_odeiv2_driver *d =
-    gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk2,
-                                 stepSize, 1e-8, 1e-8);
-  double t = 0.0;
-  double y[6] = { 0, 0, 0, 20, 0, 2 };
-  int i, s;
-  for (i = 0; i < numberofSteps; i++)
-    {
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-      if (s != GSL_SUCCESS)
-        {
-          printf ("error: driver returned %d\n", s);
-          break;
-        }
-      fprintf (f,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2], y[3], y[4], y[5]);
-    }
-  gsl_odeiv2_driver_free (d);
-  return s;
+    cpmrk23 (stepSize, numberofSteps);
   }
 
   /*charged particle motion with explicit RK(8,9)*/
   else if (problemNo == 2 && solutionMethod == 3)
   {
-  FILE *f = fopen("output.dat", "w");
-  double w = 5;
-  double tao = 5;
-  double constants[2] = {w, tao};
-  gsl_odeiv2_system sys = { func, jac, 6, &constants };
-  gsl_odeiv2_driver *d =
-    gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd,
-                                 stepSize, 1e-8, 1e-8);
-  double t = 0.0;
-  double y[6] = { 0, 0, 0, 20, 0, 2 };
-  int i, s;
-  for (i = 0; i < numberofSteps; i++)
-    {
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-      if (s != GSL_SUCCESS)
-        {
-          printf ("error: driver returned %d\n", s);
-          break;
-        }
-      fprintf (f,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2], y[3], y[4], y[5]);
-    }
-  gsl_odeiv2_driver_free (d);
-  return s;
+    cpmrk89 (stepSize, numberofSteps);
   }
 
   /*simple ODE with explicit RK4*/
   else if (problemNo == 1 && solutionMethod == 1)
   {
-  //The simple first order differential equation to solve is y'(x)=y(x) with the initial condition y(0)=1.
-  double mu = 0; 
-  double e; 
-  gsl_odeiv2_system sys = { func2, jac2, 1, &mu }; 
-  gsl_odeiv2_driver *d =
-    gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,
-                                   stepSize, 1e-8, 1e-8);
-  double t = 0.0;
-  double y[1] = { 1.0 }; 
-  int i, s;
-  for (i = 0; i < numberofSteps; i++)
-    {
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-      if (s != GSL_SUCCESS)
-       {
-          printf ("error: driver returned %d\n", s);
-          break;
-        }
-      e = exp(t); 
-      printf ("%.5e %.5e exact:%.5e\n", t, y[0],e); 
-    }
-  gsl_odeiv2_driver_free (d);
-  return s;
+    //The simple first order differential equation to solve is y'(x)=y(x) with the initial condition y(0)=1.
+    soderk4 (stepSize, numberofSteps);
   }
 
   /*simple ODE with explicit RK(2,3)*/
   else if (problemNo == 1 && solutionMethod == 2)
   {
-  double mu = 0;
-  double e;
-  gsl_odeiv2_system sys = { func2, jac2, 1, &mu };
-  gsl_odeiv2_driver *d =
-    gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk2,
-                                   stepSize, 1e-8, 1e-8);
-  double t = 0.0;
-  double y[1] = { 1.0 };
-  int i, s;
-  for (i = 0; i < numberofSteps; i++)
-    {
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-      if (s != GSL_SUCCESS)
-       {
-          printf ("error: driver returned %d\n", s);
-          break;
-        }
-      e = exp(t);
-      printf ("%.5e %.5e exact:%.5e\n", t, y[0],e);
-    }
-  gsl_odeiv2_driver_free (d);
-  return s;
+    soderk23 (stepSize, numberofSteps);
   }
 
   /*simple ODE with explicit RK(8,9)*/
   else if (problemNo == 1 && solutionMethod == 3)
   {
-  double mu = 0;
-  double e;
-  gsl_odeiv2_system sys = { func2, jac2, 1, &mu };
-  gsl_odeiv2_driver *d =
-    gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd,
-                                   stepSize, 1e-8, 1e-8);
-  double t = 0.0;
-  double y[1] = { 1.0 };
-  int i, s;
-  for (i = 0; i < numberofSteps; i++)
-    {
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-      if (s != GSL_SUCCESS)
-       {
-          printf ("error: driver returned %d\n", s);
-          break;
-        }
-      e = exp(t);
-      printf ("%.5e %.5e exact:%.5e\n", t, y[0],e);
-    }
-  gsl_odeiv2_driver_free (d);
-  return s;
+    soderk89 (stepSize, numberofSteps);
   }
 }
