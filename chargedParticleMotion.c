@@ -42,7 +42,6 @@ main (void)
     printf("--> %-10s = %i\n","debugMode",debugMode);}
 
   grvy_log_setlevel(GRVY_INFO);
-
   grvy_input_fclose();
 
   /*charged particle motion with explicit RK4*/
@@ -145,7 +144,6 @@ main (void)
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-  
       if (s != GSL_SUCCESS)
        {
           printf ("error: driver returned %d\n", s);
@@ -173,7 +171,6 @@ main (void)
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-
       if (s != GSL_SUCCESS)
        {
           printf ("error: driver returned %d\n", s);
@@ -201,7 +198,6 @@ main (void)
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
-
       if (s != GSL_SUCCESS)
        {
           printf ("error: driver returned %d\n", s);
@@ -213,5 +209,4 @@ main (void)
   gsl_odeiv2_driver_free (d);
   return s;
   }
-
 }

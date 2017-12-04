@@ -4,8 +4,7 @@ numberofSteps = 100000	   # step size * number of steps = # of seconds
 [options] 
 
 problemNo = 2              # simple ODE (1), charged particle motion (2)
-solutionMethod = 2	   # explitict RK4 (1), explicit RK(2,3) (2), explicit RK(8,9) (3)
+solutionMethod = 3	   # explitict RK4 (1), explicit RK(2,3) (2), explicit RK(8,9) (3)
 verificationMode = 0	   # verification mode off (0), on (1)
 debugMode = 0		   # debug mode off (0), on (1)
 
-ADD NUMBEROFSTEPS TO CODE!
