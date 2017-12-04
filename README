@@ -1,1 +1,14 @@
 This is a scientific application that numerically approximates the solution to differential equations.
+
+with GSL 
+Charged particle motion equations:
+
+x'=u
+y'=v
+z'=w
+u'=wv-u/tao
+v'=-wu-v/tao
+w'=-w/tao
+
+w=5, tao=5, ICS: x_0=(0,0,0) and v_0=(20,0,2)
+
