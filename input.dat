@@ -1,0 +1,10 @@
+stepSize = 0.001	   # step size h
+
+[options] 
+
+problemNo = 2              # simple ODE (1), charged particle motion (2)
+solutionMethod = 1	   # explitict RK4 (1), implicit Euler (2), implicit RK2 (3)
+verificationMode = 0	   # verification mode off (0), on (1)
+debugMode = 0		   # debug mode off (0), on (1)
+
+
