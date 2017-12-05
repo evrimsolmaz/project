@@ -1,5 +1,0 @@
-#!/bin/bash
-
-rm output.dat
-rm chargedParticleMotion.eps
-rm chargedParticleMotion
