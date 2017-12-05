@@ -1,0 +1,49 @@
+\documentclass[notitlepage,11pt,oneside]{scrartcl}
+
+%\usepackage{textcomp}
+%\usepackage{color}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage[margin=0.8in]{geometry}
+%\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[font={small,it}]{caption}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage[normalem]{ulem}
+\usepackage{tikz}
+\setlength{\parindent}{0pt}
+%\setlength{\parskip}{0.5em}
+\newcommand{\avg}[1]{\langle #1 \rangle}
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ydel}{\widetilde{y}}
+\newcommand{\yp}{y^{+}}
+
+\author{
+	Solmaz, Evrim			\\\texttt{solmazevrim@utexas.edu}
+}
+\title{CSE380 Final Project}
+\subtitle{Charged particle motion in a vertical electric field}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Soltuion of the system of equations with the initial conditions:
+
+\begin{eqnarray}
+x(t)=\frac{50}{313}e^{-t/5}(e^{t/5}+25sin(5t)-cos(5t)) \\
+y(t)=\frac{50}{313}e^{-t/5}(-25e^{t/5}+sin(5t)+25cos(5t)) \\
+z(t)=10-10e^{-t/5} \\
+u(t)=20e^{-t/5}cos(5t) \\
+v(t)=-20e^{-t/5}sin(5t) \\
+w(t)=2e^{-t/5}
+\end{eqnarray}
+
+\end{document}
