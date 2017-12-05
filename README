@@ -25,11 +25,20 @@ This program computes the numerical and analytical solution to the simple ODE an
  
  w=5, tao=5, initial conditions: x_0=(0,0,0) and v_0=(20,0,2)
 
-(Analytical solution to the system of equations can be found in the project report.)
- 
 with the third party library GSL.
 
+Analytical solution:
+
+x(t)=\frac{50}{313}e^{-t/5}(e^{t/5}+25sin(5t)-cos(5t))
+y(t)=\frac{50}{313}e^{-t/5}(-25e^{t/5}+sin(5t)+25cos(5t))
+z(t)=10-10e^{-t/5}
+u(t)=20e^{-t/5}cos(5t)
+v(t)=-20e^{-t/5}sin(5t)
+w(t)=2e^{-t/5}
+
 Input parsing for chargedParticleMotion is done via the grvy library and it can be managed in the file input.dat, which is self-explanatory.
+
+If input.dat is set to problem 1, running './simpleODEmyRK4' outputs the results in standard output.
 
 If input.dat is set to problem 2, running './chargedParticleMotion' produces output.dat which has theevolution of all 6 variables. To plot the trajectory, run the command 'gnuplot plotx.plt' to produce the eps file of the plot and view it with the command 'evince chargedParticleMotion.eps'.
 

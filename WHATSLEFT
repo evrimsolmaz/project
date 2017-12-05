@@ -1,6 +1,6 @@
 -Add comments to code
 
--Add dynamic memory allocations (may not be applicable to me)
+-Add dynamic memory allocations 
 
 -Add debug mode (already exists in input.dat; just add if cases to code)
 

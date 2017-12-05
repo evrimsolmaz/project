@@ -167,3 +167,26 @@ int soderk89 (float stepSize, int numberofSteps, float tolabs, float tolrel)
   return s;
 }
 
+int analyticalSolution (float stepSize, int numberofSteps)
+{
+  //double w = 5;
+  //double tao = 5;
+  FILE *f = fopen("outputAnalytical.dat", "w");
+  double y[numberofSteps][4];
+  int i;
+  double t = 0.0;
+  for (i = 0; i < numberofSteps; i++)
+    {
+      y[i][0] = (50/113)*exp(-t/5)*(exp(t/5)+25*sin(5*t)-cos(5*t));
+      y[i][1] = (50/113)*exp(-t/5)*((-25)*exp(t/5)+sin(5*t)+25*cos(5*t));
+      y[i][2] = 10-10*exp(-t/5);
+      fprintf (f,"%.5e %.5e %.5e %.5e\n", t, y[i][0], y[i][1], y[i][2]);
+      t = t + stepSize;
+    }
+  return 0;
+}
+
+
+
+
+

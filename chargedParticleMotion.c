@@ -53,6 +53,11 @@ main (void)
   grvy_log_setlevel(GRVY_INFO);
   grvy_input_fclose();
 
+  if (verificationMode == 1)
+  {
+    analyticalSolution (stepSize, numberofSteps);
+  }
+
   /*charged particle motion with GSL explicit RK4*/
   if (problemNo == 2 && solutionMethod == 1)
   {
