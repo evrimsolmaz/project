@@ -17,11 +17,19 @@ main (void)
   int numberofSteps;
   int verificationMode;
   int debugMode;
+  float tolabs;
+  float tolrel;
 
   grvy_input_fopen("./input.dat");
 
   if(grvy_input_fread_float("stepSize",&stepSize))
     printf("--> %-10s = %f\n","stepSize",stepSize);
+
+  if(grvy_input_fread_float("tolabs",&tolabs))
+    printf("--> %-10s = %f\n","tolabs",tolabs);
+
+  if(grvy_input_fread_float("tolrel",&tolrel))
+    printf("--> %-10s = %f\n","tolrel",tolrel);
 
   if(grvy_input_fread_int("numberofSteps",&numberofSteps))
     printf("--> %-10s = %i\n","numberofSteps",numberofSteps);
@@ -45,40 +53,40 @@ main (void)
   grvy_log_setlevel(GRVY_INFO);
   grvy_input_fclose();
 
-  /*charged particle motion with explicit RK4*/
+  /*charged particle motion with GSL explicit RK4*/
   if (problemNo == 2 && solutionMethod == 1)
   {
-    cpmrk4 (stepSize, numberofSteps);
+    cpmrk4 (stepSize, numberofSteps, tolabs, tolrel);
   }
 
-  /*charged particle motion with explicit RK(2,3)*/
+  /*charged particle motion with GSL explicit RK(2,3)*/
   else if (problemNo == 2 && solutionMethod == 2)
   {
-    cpmrk23 (stepSize, numberofSteps);
+    cpmrk23 (stepSize, numberofSteps, tolabs, tolrel);
   }
 
-  /*charged particle motion with explicit RK(8,9)*/
+  /*charged particle motion with GSL explicit RK(8,9)*/
   else if (problemNo == 2 && solutionMethod == 3)
   {
-    cpmrk89 (stepSize, numberofSteps);
+    cpmrk89 (stepSize, numberofSteps, tolabs, tolrel);
   }
 
-  /*simple ODE with explicit RK4*/
+  /*simple ODE with GSL explicit RK4*/
   else if (problemNo == 1 && solutionMethod == 1)
   {
     //The simple first order differential equation to solve is y'(x)=y(x) with the initial condition y(0)=1.
-    soderk4 (stepSize, numberofSteps);
+    soderk4 (stepSize, numberofSteps, tolabs, tolrel);
   }
 
-  /*simple ODE with explicit RK(2,3)*/
+  /*simple ODE with GSL explicit RK(2,3)*/
   else if (problemNo == 1 && solutionMethod == 2)
   {
-    soderk23 (stepSize, numberofSteps);
+    soderk23 (stepSize, numberofSteps, tolabs, tolrel);
   }
 
-  /*simple ODE with explicit RK(8,9)*/
+  /*simple ODE with GSL explicit RK(8,9)*/
   else if (problemNo == 1 && solutionMethod == 3)
   {
-    soderk89 (stepSize, numberofSteps);
+    soderk89 (stepSize, numberofSteps, tolabs, tolrel);
   }
 }

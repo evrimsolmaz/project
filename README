@@ -1,14 +1,31 @@
-This is a scientific application that numerically approximates the solution to differential equations.
+This is a scientific application that numerically approximates the solution to differential equationswith GSL.
 
-with GSL 
-Charged particle motion equations:
+-How to build:
+ Run 'make'
 
-x'=u
-y'=v
-z'=w
-u'=wv-u/tao
-v'=-wu-v/tao
-w'=-w/tao
+Two executables are created in the make process: chargedParticleMotion and simpleODEmyRK4.
 
-w=5, tao=5, ICS: x_0=(0,0,0) and v_0=(20,0,2)
+-simpleODEmyRK4 is my implementation of an RK4 solver and it solves the simple first order differential equation y'(x)=y(x) with the initial condition y(0)=1.
+
+This program computes the numerical and analytical solution to the simple ODE and also prints the error to the standard output. The exact solution to the problem is y(x)=e^t. 
+
+-chargedParticleMotion can solve both the simple first order ODE mentioned above and the charged particle motion equations: 
+
+ x'=u
+ y'=v
+ z'=w
+ u'=wv-u/tao
+ v'=-wu-v/tao
+ w'=-w/tao
+ 
+ w=5, tao=5, initial conditions: x_0=(0,0,0) and v_0=(20,0,2)
+ 
+with the third party library GSL.
+
+Input parsing for chargedParticleMotion is done via the grvy library and it can be managed in the file input.dat, which is self-explanatory.
+
+If input.dat is set to problem 2, running './chargedParticleMotion' produces output.dat which has theevolution of all 6 variables. To plot the trajectory, run the command 'gnuplot plotx.plt' to produce the eps file of the plot and view it with the command 'evince chargedParticleMotion.eps'.
+
+-How to clean up:
+ Run 'make clean' to delete all executables and files created.
 
