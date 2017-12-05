@@ -1,0 +1,20 @@
+-Add comments to code
+
+-Add dynamic memory allocations (may not be applicable to me)
+
+-Add debug mode (already exists in input.dat; just add if cases to code)
+
+-include performance timing measurements for key kernels within the code
+
+-Add verification mode which will enable your code to compute the difference between your numerical solution and the analytic solution. Your code should output this error norm within the standard output when running in verification mode. (already exists in input.dat; but I need to check whether analytical solution exists for this problem.)
+
+-perform asymptotic convergence analysis and provide a log-log plot of the results for all methods
+
+-compare timings of my RK4 to GSL's implementation
+
+-For simple ODE:Show convergence to the analytical solution as a function of h. Also compare the performance of your implementation to that of the tpl implementation.
+
+-For charged particle motion:Analyze the performance and convergence of each of the methods.
+
+-Add to make:It must also have an option to run a suite of regression tests via the “make check” target. It also should support a “make coverage” target that uses lcov/gcov to process the results from the test suite. (in class notes; regression tests will not be so hard if I just test it with different tolerances. make coverage is very easy; it is just a compilation flag.)
+
