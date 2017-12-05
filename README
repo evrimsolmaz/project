@@ -24,6 +24,8 @@ This program computes the numerical and analytical solution to the simple ODE an
  w'=-w/tao
  
  w=5, tao=5, initial conditions: x_0=(0,0,0) and v_0=(20,0,2)
+
+(Analytical solution to the system of equations can be found in the project report.)
  
 with the third party library GSL.
 
@@ -33,4 +35,5 @@ If input.dat is set to problem 2, running './chargedParticleMotion' produces out
 
 -How to clean up:
  Run 'make clean' to delete all executables and files created.
+
 
