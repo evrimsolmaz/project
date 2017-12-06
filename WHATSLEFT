@@ -1,12 +1,12 @@
 -Add comments to code
 
--Add dynamic memory allocations 
+(DONE) -Add dynamic memory allocations 
 
--Add debug mode (already exists in input.dat; just add if cases to code)
+(DONE) -Add debug mode (already exists in input.dat; just add if cases to code)
 
 -include performance timing measurements for key kernels within the code
 
--Add verification mode which will enable your code to compute the difference between your numerical solution and the analytic solution. Your code should output this error norm within the standard output when running in verification mode. (already exists in input.dat; but I need to check whether analytical solution exists for this problem.)
+(DONE) -Add verification mode which will enable your code to compute the difference between your numerical solution and the analytic solution. Your code should output this error norm within the standard output when running in verification mode. (already exists in input.dat; but I need to check whether analytical solution exists for this problem.)
 
 -perform asymptotic convergence analysis and provide a log-log plot of the results for all methods
 
@@ -18,3 +18,8 @@
 
 -Add to make:It must also have an option to run a suite of regression tests via the “make check” target. It also should support a “make coverage” target that uses lcov/gcov to process the results from the test suite. (in class notes; regression tests will not be so hard if I just test it with different tolerances. make coverage is very easy; it is just a compilation flag.)
 
+(DONE) -Correct permissions
+
+-Prepare the presentation
+
+-Submit the tarball of the code and the presentation to Canvas

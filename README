@@ -36,13 +36,14 @@ u(t)=20e^{-t/5}cos(5t)
 v(t)=-20e^{-t/5}sin(5t)
 w(t)=2e^{-t/5}
 
-Input parsing for chargedParticleMotion is done via the grvy library and it can be managed in the file input.dat, which is self-explanatory.
+-Input parsing is done via the grvy library and the problem inputs can be managed in the file input.dat, which is self-explanatory.
 
-If input.dat is set to problem 1, running './simpleODEmyRK4' outputs the results in standard output.
+-If input.dat is set to problem 1, running './simpleODEmyRK4' outputs the results in standard output.
 
-If input.dat is set to problem 2, running './chargedParticleMotion' produces output.dat which has theevolution of all 6 variables. To plot the trajectory, run the command 'gnuplot plotx.plt' to produce the eps file of the plot and view it with the command 'evince chargedParticleMotion.eps'.
+-If input.dat is set to problem 2, running './chargedParticleMotion' produces output.dat which has the evolution of all 6 variables. To plot the trajectory, run the command 'gnuplot plotx.plt' to produce the eps file of the plot and view it with the command 'evince chargedParticleMotion.eps'.
+
+If input.dat is set to problem 2 and the verification mode is set to 1, running './chargedParticleMotion' produces 2 output files: output.dat and outputAnalytical.dat. The command 'gnuplot plotx.plt', in this case, produces plots for the analytical and numerical results side by side.
 
 -How to clean up:
  Run 'make clean' to delete all executables and files created.
-
 
