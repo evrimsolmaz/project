@@ -212,24 +212,34 @@ int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
   free(y); //to free memory for the memory consuming norm calculations below
   FILE *f0 = fopen("outputAnalytical.dat", "r");
   FILE *f1 = fopen("output.dat", "r");
-  double time0, x0, yy0, z0;
+  FILE *f2 = fopen("norm.dat", "w");
+  double *num0 = calloc(4, sizeof (double));
   double *num1 = calloc(7, sizeof (double)); //array consists of time1, x1, yy1, z1, u1, v1, w1
   double norm = 0.0;
   printf("For easy observation, results from the first 100 time steps is listed below. The full analytical solution is saved in outputAnalytical.dat.\n");
   for (i = 0; i < 100; i++)
+  //for (i = 0; i < numberofSteps; i++)
+  //for (i = 0; i < numberofSteps/2; i++)
     {
-      fscanf(f0, "%lf %lf %lf %lf\n", &time0, &x0, &yy0, &z0);
+      fscanf(f0, "%lf %lf %lf %lf\n", &num0[0], &num0[1], &num0[2], &num0[3]);
       fscanf(f1, "%lf %lf %lf %lf %lf %lf %lf\n", &num1[0], &num1[1], &num1[2], &num1[3], &num1[4], &num1[5], &num1[6]);
-      if (debugMode == 1)
-        {
-          printf("Analytical solution at time=%.5e: %.5e %.5e %.5e\n", time0, x0, yy0, z0);
-          printf("Numerical solution at time=%.5e: %.5e %.5e %.5e\n", num1[0], num1[1], num1[2], num1[3]);
-        }
       // Here, the calculated norm is the "two-norm" of the x,y,z coordinates:
-      norm = sqrt(pow((num1[1]-x0),2.0)+pow((num1[2]-yy0),2.0)+pow((num1[3]-z0),2.0));
-      printf("%.5e %.5e\n", time0, norm);
+      norm = sqrt(pow((num1[1]-num0[1]),2.0)+pow((num1[2]-num0[2]),2.0)+pow((num1[3]-num0[3]),2.0));
+      if (debugMode == 1)
+        {   
+          printf("Analytical soln. at time=%.4e: %.4e %.4e %.4e\n", num0[0], num0[1], num0[2], num0[3]);
+          printf("Numerical soln. at time=%.4e: %.4e %.4e %.4e, error norm=%.4e\n", num1[0], num1[1], num1[2], num1[3], norm);
+        }
+      else 
+        {
+	  printf("time=%.5e\tnorm=%.5e\n", num0[0], norm);
+        }
+      fprintf(f2,"Analytical soln. at time=%.5e: %.5e %.5e %.5e\n", num0[0], num0[1], num0[2], num0[3]);
+      fprintf(f2,"Numerical soln. at time=%.5e: %.5e %.5e %.5e, error norm=%.5e\n", num1[0], num1[1], num1[2], num1[3], norm); 
     }
-  printf("time		norm\n");
   printf("The difference between numerical and analytical solution (error norm) at each time step are listed above. \n");
+  fclose(f0);
+  fclose(f1);
+  fclose(f2);
   return 0;
 }

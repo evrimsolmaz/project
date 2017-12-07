@@ -31,7 +31,7 @@ clobber: neat
 neat: moreneat 
 	$(RM) *~ .*~
 moreneat:
-	$(RM) output.dat outputAnalytical.dat *.eps *.gch simpleODEmyRK4
+	$(RM) output.dat outputAnalytical.dat norm.dat *.eps *.gch simpleODEmyRK4
 echo: 
 	@echo $(OBJ)
 
