@@ -9,23 +9,25 @@
 #include "funcsandjacs.h"
 #include "probsandmethods.h"
 
+// All the solvers are in this function. They all use GSL's RK4, RK2-3 or RK8-9 stepping functions.
+
 int cpmrk4 (float stepSize, int numberofSteps, float tolabs, float tolrel, int debugMode)
 {
   FILE *f = fopen("output.dat", "w");
   double w = 5;
   double tao = 5;
   double constants[2] = {w, tao};
-  gsl_odeiv2_system sys = { func, jac, 6, &constants };  
+  gsl_odeiv2_system sys = { func, jac, 6, &constants }; //The system of equations are defined: func, jac,6 equations, w, tao  
   gsl_odeiv2_driver *d =
     gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,
-                                 stepSize, tolabs, tolrel);
-  double t = 0.0;
-  double y[6] = { 0, 0, 0, 20, 0, 2 };  
+                                 stepSize, tolabs, tolrel); //RK4 stepping function is used
+  double t = 0.0; //Starting from t=0
+  double y[6] = { 0, 0, 0, 20, 0, 2 };  //Initial conditions. 6 refers to the number of equations present
   int i, s;
   clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {   
-      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y); 
+      s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y); //Solution advances in time with fixed time steps
       if (s != GSL_SUCCESS)
         {   
           printf ("error: driver returned %d\n", s); 
@@ -224,7 +226,7 @@ int soderk89 (float stepSize, int numberofSteps, float tolabs, float tolrel, int
 
 int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
 {
-  FILE *f = fopen("outputAnalytical.dat", "w");
+  FILE *f = fopen("outputAnalytical.dat", "w"); //This is where the analytical solution will be stored
   double *y = calloc(3, sizeof (double)); // allocate memory for 3 doubles
   int i;
   double t = 0.0;
@@ -232,7 +234,7 @@ int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
     {
       y[0] = (50.0/313.0)*exp(-t/5)*(exp(t/5)+25*sin(5*t)-cos(5*t));
       y[1] = (50.0/313.0)*exp(-t/5)*((-25)*exp(t/5)+sin(5*t)+25*cos(5*t));
-      y[2] = 10-10*exp(-t/5);
+      y[2] = 10-10*exp(-t/5); //The analytical solution
       t = t + stepSize;
       fprintf (f,"%.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2]);
     }
@@ -241,8 +243,8 @@ int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
   FILE *f0 = fopen("outputAnalytical.dat", "r");
   FILE *f1 = fopen("output.dat", "r");
   FILE *f2 = fopen("norm.dat", "w");
-  double *num0 = calloc(4, sizeof (double));
-  double *num1 = calloc(7, sizeof (double)); //array consists of time1, x1, yy1, z1, u1, v1, w1
+  double *num0 = calloc(4, sizeof (double)); //array consists of time step, x, y, z
+  double *num1 = calloc(7, sizeof (double)); //array consists of time step, x, y, z, u, v, w
   double norm = 0.0;
   printf("For easy observation, results from the first 200 time steps is listed below. The full analytical solution is saved in outputAnalytical.dat.\n");
   //for (i = 0; i < 200; i++)

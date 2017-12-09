@@ -11,6 +11,7 @@
 int
 main (void)
 {
+// Initializing the input variables that come from the input file input.dat:
   int problemNo;
   int solutionMethod;
   float stepSize;
@@ -49,6 +50,8 @@ main (void)
   grvy_log_setlevel(GRVY_INFO);
   grvy_input_fclose();
 
+// Each problemNo & solutionMethod input combination invokes a different solver
+
   /*charged particle motion with GSL explicit RK4*/
   if (problemNo == 2 && solutionMethod == 1)
   {
@@ -84,6 +87,8 @@ main (void)
   {
     soderk89 (stepSize, numberofSteps, tolabs, tolrel, debugMode);
   }
+
+// The analytical solution function of the charged particle motion equations (below) is only invoked if verification mode is on
 
   if (verificationMode == 1)
   {

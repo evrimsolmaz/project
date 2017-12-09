@@ -16,7 +16,7 @@
 
 (DONE) -Correct permissions
 
--Add comments to code
+(DONE) -Add comments to code
 
 -Add to make:It must also have an option to run a suite of regression tests via the “make check” target. It also should support a “make coverage” target that uses lcov/gcov to process the results from the test suite. (in class notes; spend some time on make check. make coverage is very easy; there is a video.)
 
