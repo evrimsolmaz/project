@@ -5,6 +5,7 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
 #include <grvy.h>
+#include <time.h>
 #include "funcsandjacs.h"
 #include "probsandmethods.h"
 
@@ -21,6 +22,7 @@ int cpmrk4 (float stepSize, int numberofSteps, float tolabs, float tolrel, int d
   double t = 0.0;
   double y[6] = { 0, 0, 0, 20, 0, 2 };  
   int i, s;
+  clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {   
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y); 
@@ -32,11 +34,14 @@ int cpmrk4 (float stepSize, int numberofSteps, float tolabs, float tolrel, int d
       fprintf (f,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2], y[3], y[4], y[5]);
     }
   gsl_odeiv2_driver_free (d);
+  clock_t end = clock();
   if (debugMode == 1)
   {
     printf ("Constants: w is %lf and tao is %lf\n", w, tao);
     printf ("The Jacobian is\n0 0 0 1 0 0\n0 0 0 0 1 0\n0 0 0 0 0 1\n0 0 0 (-1/%lf) %lf 0\n0 0 0 -%lf (-1/%lf) 0\n0 0 0 0 0 (-1/%lf)\n", tao, w, w, tao, tao); 
   }
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("time spent to reach the solution is %.5e seconds\n", time_spent);
   return s;
 }
 
@@ -53,6 +58,7 @@ int cpmrk23 (float stepSize, int numberofSteps, float tolabs, float tolrel, int 
   double t = 0.0;
   double y[6] = { 0, 0, 0, 20, 0, 2 };
   int i, s;
+  clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
@@ -64,11 +70,14 @@ int cpmrk23 (float stepSize, int numberofSteps, float tolabs, float tolrel, int 
       fprintf (f,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2], y[3], y[4], y[5]);
     }
   gsl_odeiv2_driver_free (d);
+  clock_t end = clock();
   if (debugMode == 1)
   {
     printf ("Constants: w is %lf and tao is %lf\n", w, tao);
     printf ("The Jacobian is\n0 0 0 1 0 0\n0 0 0 0 1 0\n0 0 0 0 0 1\n0 0 0 (-1/%lf) %lf 0\n0 0 0 -%lf (-1/%lf) 0\n0 0 0 0 0 (-1/%lf)\n", tao, w, w, tao, tao); 
   }
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("time spent to reach the solution is %.5e seconds\n", time_spent);
   return s;
 }
 
@@ -85,6 +94,7 @@ int cpmrk89 (float stepSize, int numberofSteps, float tolabs, float tolrel, int 
   double t = 0.0;
   double y[6] = { 0, 0, 0, 20, 0, 2 };
   int i, s;
+  clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
@@ -96,18 +106,21 @@ int cpmrk89 (float stepSize, int numberofSteps, float tolabs, float tolrel, int 
       fprintf (f,"%.5e %.5e %.5e %.5e %.5e %.5e %.5e\n", t, y[0], y[1], y[2], y[3], y[4], y[5]);
     }
   gsl_odeiv2_driver_free (d);
+  clock_t end = clock();
   if (debugMode == 1)
   {
     printf ("Constants: w is %lf and tao is %lf\n", w, tao);
     printf ("The Jacobian is\n0 0 0 1 0 0\n0 0 0 0 1 0\n0 0 0 0 0 1\n0 0 0 (-1/%lf) %lf 0\n0 0 0 -%lf (-1/%lf) 0\n0 0 0 0 0 (-1/%lf)\n", tao, w, w, tao, tao); 
   }
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("time spent to reach the solution is %.5e seconds\n", time_spent);
   return s;
 }
 
 int soderk4 (float stepSize, int numberofSteps, float tolabs, float tolrel, int debugMode)
 {
   double mu = 0;
-  double e;
+  double e, errorNorm;
   gsl_odeiv2_system sys = { func2, jac2, 1, &mu };
   gsl_odeiv2_driver *d =
     gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk4,
@@ -115,6 +128,7 @@ int soderk4 (float stepSize, int numberofSteps, float tolabs, float tolrel, int 
   double t = 0.0;
   double y[1] = { 1.0 };
   int i, s;
+  clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
@@ -124,20 +138,24 @@ int soderk4 (float stepSize, int numberofSteps, float tolabs, float tolrel, int 
           break;
         }
       e = exp(t);
-      printf ("%.5e %.5e exact:%.5e\n", t, y[0],e);
+      errorNorm = e - y[0];
+      printf ("%.5e %.5e exact:%.5e error:%.5e\n", t, y[0], e, errorNorm);
     }
   gsl_odeiv2_driver_free (d);
+  clock_t end = clock();
   if (debugMode == 1)
   {
     printf ("The initial condition is 1.\n");
   }
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("time spent to reach the solution is %.5e seconds\n", time_spent);
   return s;
 }
 
 int soderk23 (float stepSize, int numberofSteps, float tolabs, float tolrel, int debugMode)
 {
   double mu = 0;
-  double e;
+  double e, errorNorm;;
   gsl_odeiv2_system sys = { func2, jac2, 1, &mu };
   gsl_odeiv2_driver *d =
     gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk2,
@@ -145,6 +163,7 @@ int soderk23 (float stepSize, int numberofSteps, float tolabs, float tolrel, int
   double t = 0.0;
   double y[1] = { 1.0 };
   int i, s;
+  clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
@@ -154,20 +173,24 @@ int soderk23 (float stepSize, int numberofSteps, float tolabs, float tolrel, int
           break;
         }
       e = exp(t);
-      printf ("%.5e %.5e exact:%.5e\n", t, y[0],e);
+      errorNorm = e - y[0];
+      printf ("%.5e %.5e exact:%.5e error:%.5e\n", t, y[0],e, errorNorm);
     }
   gsl_odeiv2_driver_free (d);
+  clock_t end = clock();
   if (debugMode == 1)
   {
     printf ("The initial condition is 1.\n");
   }
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("time spent to reach the solution is %.5e seconds\n", time_spent);
   return s;
 }
 
 int soderk89 (float stepSize, int numberofSteps, float tolabs, float tolrel, int debugMode)
 {
   double mu = 0;
-  double e;
+  double e, errorNorm;;
   gsl_odeiv2_system sys = { func2, jac2, 1, &mu };
   gsl_odeiv2_driver *d =
     gsl_odeiv2_driver_alloc_y_new (&sys, gsl_odeiv2_step_rk8pd,
@@ -175,6 +198,7 @@ int soderk89 (float stepSize, int numberofSteps, float tolabs, float tolrel, int
   double t = 0.0;
   double y[1] = { 1.0 };
   int i, s;
+  clock_t begin = clock();
   for (i = 0; i < numberofSteps; i++)
     {
       s = gsl_odeiv2_driver_apply_fixed_step (d, &t, stepSize, 1, y);
@@ -184,13 +208,17 @@ int soderk89 (float stepSize, int numberofSteps, float tolabs, float tolrel, int
           break;
         }
       e = exp(t);
-      printf ("%.5e %.5e exact:%.5e\n", t, y[0],e);
+      errorNorm = e - y[0];
+      printf ("%.5e %.5e exact:%.5e error:%.5e\n", t, y[0],e, errorNorm);
     }
   gsl_odeiv2_driver_free (d);
+  clock_t end = clock();
   if (debugMode == 1)
   {
     printf ("The initial condition is 1.\n");
   }
+  double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+  printf("time spent to reach the solution is %.5e seconds\n", time_spent);
   return s;
 }
 
@@ -216,10 +244,9 @@ int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
   double *num0 = calloc(4, sizeof (double));
   double *num1 = calloc(7, sizeof (double)); //array consists of time1, x1, yy1, z1, u1, v1, w1
   double norm = 0.0;
-  printf("For easy observation, results from the first 100 time steps is listed below. The full analytical solution is saved in outputAnalytical.dat.\n");
-  for (i = 0; i < 100; i++)
-  //for (i = 0; i < numberofSteps; i++)
-  //for (i = 0; i < numberofSteps/2; i++)
+  printf("For easy observation, results from the first 200 time steps is listed below. The full analytical solution is saved in outputAnalytical.dat.\n");
+  //for (i = 0; i < 200; i++)
+  for (i = 0; i < numberofSteps; i++)
     {
       fscanf(f0, "%lf %lf %lf %lf\n", &num0[0], &num0[1], &num0[2], &num0[3]);
       fscanf(f1, "%lf %lf %lf %lf %lf %lf %lf\n", &num1[0], &num1[1], &num1[2], &num1[3], &num1[4], &num1[5], &num1[6]);
@@ -228,7 +255,7 @@ int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
       if (debugMode == 1)
         {   
           printf("Analytical soln. at time=%.4e: %.4e %.4e %.4e\n", num0[0], num0[1], num0[2], num0[3]);
-          printf("Numerical soln. at time=%.4e: %.4e %.4e %.4e, error norm=%.4e\n", num1[0], num1[1], num1[2], num1[3], norm);
+          printf("Numerical soln. at time=%.4e: %.4e %.4e %.4e, error norm=%.4e\n", num1[0], num1[1], num1[2], num1[3],  norm);
         }
       else 
         {

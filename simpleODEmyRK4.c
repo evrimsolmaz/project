@@ -22,20 +22,21 @@ double rate(double x, double y)
 
 int main(void)
 {
+	FILE *f = fopen("outputSimpleODE.dat", "w");
 	double *y, x, y2;
-	double x0 = 0, x1 = 10, dx = .01;
+	double x0 = 0, x1 = 1, dx = 0.02;
 	int i, n = 1 + (x1 - x0)/dx;
-	y = (double *)malloc(sizeof(double) * n);
- 
+	y = (double *)malloc(sizeof(double) * n); 
 	for (y[0] = 1, i = 1; i < n; i++)
 		y[i] = rk4(rate, dx, x0 + dx * (i - 1), y[i-1]);
  
 	printf("x\ty\trel. err.\texact solution\n------------\n");
-	for (i = 0; i < n; i += 10) {
+	for (i = 0; i < n; i += 1) {
 		x = x0 + dx * i;
 		y2 = exp(x);
 		printf("%g\t%g\t%g\t%g\n", x, y[i], y[i]/y2 - 1, y2);
+		fprintf(f,"%g\t%g\t%g\t%g\n", x, y[i], y[i]/y2 - 1, y2);
 	}
- 
+	fclose(f);
 	return 0;
 }

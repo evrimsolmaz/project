@@ -1,4 +1,7 @@
+--------------------------------CHARGED PARTICLE MOTION PROBLEM--------------------------------------
+
 This is a scientific application that numerically approximates the solution to differential equationswith GSL.
+
 
 -Run the following command in Lonestar5 to load the necessary modules:
  module load TACC/1.0 gcc/5.2.0 cray_mpich/7.3.0 gsl/2.2.1 gnuplot/5.0.1 boost/1.59
@@ -10,7 +13,7 @@ Note that since the grvy library doesn't exist as a module in Lonestar5, I compi
 
 Two executables are created in the make process: chargedParticleMotion and simpleODEmyRK4.
 
--simpleODEmyRK4 is my implementation of an RK4 solver and it solves the simple first order differential equation y'(x)=y(x) with the initial condition y(0)=1.
+-simpleODEmyRK4 is my implementation of an explicit RK4 solver and it solves the simple first order differential equation y'(x)=y(x) with the initial condition y(0)=1.
 
 This program computes the numerical and analytical solution to the simple ODE and also prints the error to the standard output. The exact solution to the problem is y(x)=e^t. 
 
@@ -29,8 +32,8 @@ with the third party library GSL.
 
 Analytical solution:
 
-x(t)=\frac{50}{313}e^{-t/5}(e^{t/5}+25sin(5t)-cos(5t))
-y(t)=\frac{50}{313}e^{-t/5}(-25e^{t/5}+sin(5t)+25cos(5t))
+x(t)=(50/313)e^{-t/5}(e^{t/5}+25sin(5t)-cos(5t))
+y(t)=(50/313)e^{-t/5}(-25e^{t/5}+sin(5t)+25cos(5t))
 z(t)=10-10e^{-t/5}
 u(t)=20e^{-t/5}cos(5t)
 v(t)=-20e^{-t/5}sin(5t)
@@ -38,11 +41,19 @@ w(t)=2e^{-t/5}
 
 -Input parsing is done via the grvy library and the problem inputs can be managed in the file input.dat, which is self-explanatory.
 
--If input.dat is set to problem 1, running './simpleODEmyRK4' outputs the results in standard output.
+-Running './simpleODEmyRK4' outputs the results in standard output and produces outputSimpleODE.dat which stores the same results in the stdout.
 
--If input.dat is set to problem 2, running './chargedParticleMotion' produces output.dat which has the evolution of all 6 variables. To plot the trajectory, run the command 'gnuplot plotx.plt' to produce the eps file of the plot and view it with the command 'evince chargedParticleMotion.eps'.
+-If input.dat is set to problem 1, running './chargedParticleMotion' outputs the result, the exact solution and the error between the numerical and exact solution in stdout.
+
+-If input.dat is set to problem 2, running './chargedParticleMotion' produces output.dat which has the evolution of all 6 variables. To plot the trajectory, run the command 'gnuplot plotxCharged.plt' to produce the eps file of the plot and view it with the command 'evince chargedParticleMotion.eps'.
 
 If input.dat is set to problem 2 and the verification mode is set to 1, running './chargedParticleMotion' produces 2 output files: output.dat and outputAnalytical.dat. The command 'gnuplot plotx.plt', in this case, produces plots for the analytical and numerical results side by side.
+
+-Convergence analysis figures can be plotted by running the commands 'gnuplot plotSimpleODEConvergence.plt' and 'gnuplot plotChargedParticleConvergence.plt' which will produce .eps files with the same names. In these figures, error norm is plotted vs. step size for each method and problem. 
+
+Note: For the charged particle motion problem, the error norm is calculated as l2-norm between the analytical and numerical solution, while for the simple ODE it is calculated as l1 norm.
+
+-Performance figures can be plotted by running the commands 'gnuplot plotSimpleODEPrecision-work.plt' and 'gnuplot plotChargedParticlePrecision-work.plt' which will produce .eps files with the same names. In these figures, wall clock time is plotted vs. error norm for each method and problem.
 
 -How to clean up:
  Run 'make clean' to delete all executables and files created.
