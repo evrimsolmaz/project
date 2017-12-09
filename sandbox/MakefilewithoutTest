@@ -22,14 +22,6 @@ $(OBJ): $(SRC)
 	$(CC) $(CFLAGS) -I$(INC) -I$(INC)/gsl -I$(GRVY_INC) -c $^
 chargedParticleMotion.o probsandmethods.o: funcsandjacs.h probsandmethods.h
 funcsandjacs.o: funcsandjacs.h
-# Test target
-check: 
-	cp input.dat tempInput.dat
-	cp ./testSuite/inputTest.dat input.dat
-	./$(EXEC)
-	diff ./testSuite/correct.dat output.dat > ./testSuite/diffResult.dat
-	./testSuite/diffTest.sh
-	cp tempInput.dat input.dat
 # Useful phony targets
 .PHONY: clean clobber neat moreneat echo
 clean: clobber
@@ -39,7 +31,7 @@ clobber: neat
 neat: moreneat 
 	$(RM) *~ .*~
 moreneat:
-	$(RM) output.dat outputAnalytical.dat norm.dat outputSimpleODE.dat tempInput.dat ./testSuite/diffResult.dat *.eps *.gch simpleODEmyRK4
+	$(RM) output.dat outputAnalytical.dat norm.dat outputSimpleODE.dat *.eps *.gch simpleODEmyRK4
 echo: 
 	@echo $(OBJ)
 

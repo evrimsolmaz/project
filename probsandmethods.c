@@ -247,8 +247,8 @@ int analyticalSolution (float stepSize, int numberofSteps, int debugMode)
   double *num1 = calloc(7, sizeof (double)); //array consists of time step, x, y, z, u, v, w
   double norm = 0.0;
   printf("For easy observation, results from the first 200 time steps is listed below. The full analytical solution is saved in outputAnalytical.dat.\n");
-  //for (i = 0; i < 200; i++)
-  for (i = 0; i < numberofSteps; i++)
+  for (i = 0; i < 200; i++)
+  //for (i = 0; i < numberofSteps; i++)
     {
       fscanf(f0, "%lf %lf %lf %lf\n", &num0[0], &num0[1], &num0[2], &num0[3]);
       fscanf(f1, "%lf %lf %lf %lf %lf %lf %lf\n", &num1[0], &num1[1], &num1[2], &num1[3], &num1[4], &num1[5], &num1[6]);
