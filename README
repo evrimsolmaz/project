@@ -9,7 +9,7 @@ This is a scientific application that numerically approximates the solution to d
 Note that since the grvy library doesn't exist as a module in Lonestar5, I compiled it in my home directory; the address of which is stated in the makefile.
 
 -How to build:
- Run 'make'
+ Run 'make' to build and then (optionally) 'make check' to run the regression test. It should pass without a problem.
 
 Two executables are created in the make process: chargedParticleMotion and simpleODEmyRK4.
 
@@ -54,6 +54,8 @@ If input.dat is set to problem 2 and the verification mode is set to 1, running 
 Note: For the charged particle motion problem, the error norm is calculated as l2-norm between the analytical and numerical solution, while for the simple ODE it is calculated as l1 norm.
 
 -Performance figures can be plotted by running the commands 'gnuplot plotSimpleODEPrecision-work.plt' and 'gnuplot plotChargedParticlePrecision-work.plt' which will produce .eps files with the same names. In these figures, wall clock time is plotted vs. error norm for each method and problem.
+
+-Running './chargedParticleMotion' and then 'make coverage' will give the code coverage results of the .c file.
 
 -How to clean up:
  Run 'make clean' to delete all executables and files created.

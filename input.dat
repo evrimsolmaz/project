@@ -1,5 +1,5 @@
-stepSize = 0.001	   # step size h
-numberofSteps = 2000	   # step size * number of steps = # of seconds
+stepSize = 0.0001	   # step size h
+numberofSteps = 200000	   # step size * number of steps = # of seconds
 tolabs = 1e-8		   # absolute error tolerance
 tolrel = 1e-8		   # relative error tolerance
 

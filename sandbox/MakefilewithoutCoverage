@@ -12,20 +12,16 @@ INC := $(TACC_GSL_INC)
 GRVY_INC:= $$HOME/bin/grvy/include
 LIB := $(TACC_GSL_LIB)
 GRVY_LIB:= $$HOME/bin/grvy/lib -Wl,-rpath,$$HOME/bin/grvy/lib
-COVERAGE:= -fprofile-arcs -ftest-coverage -g
 # Rules
 all: $(EXEC) simpleODEmyRK4
 simpleODEmyRK4: simpleODEmyRK4.c
 	$(CC) -o $@ $^ -lm
 $(EXEC): $(OBJ)
-	$(CC) -L$(LIB) -L$(GRVY_LIB) $(LDLIBS) $(COVERAGE) -o $@ $^
+	$(CC) -L$(LIB) -L$(GRVY_LIB) $(LDLIBS) -o $@ $^
 $(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -I$(INC) -I$(INC)/gsl -I$(GRVY_INC) $(COVERAGE) -c $^
+	$(CC) $(CFLAGS) -I$(INC) -I$(INC)/gsl -I$(GRVY_INC) -c $^
 chargedParticleMotion.o probsandmethods.o: funcsandjacs.h probsandmethods.h
 funcsandjacs.o: funcsandjacs.h
-# Coverage target
-coverage: 
-	gcov $(EXEC).c
 # Test target
 check: 
 	cp input.dat tempInput.dat
@@ -43,7 +39,7 @@ clobber: neat
 neat: moreneat 
 	$(RM) *~ .*~
 moreneat:
-	$(RM) output.dat outputAnalytical.dat norm.dat outputSimpleODE.dat tempInput.dat ./testSuite/diffResult.dat *.eps *.gch *.gcno *.gcov *.gcda simpleODEmyRK4
+	$(RM) output.dat outputAnalytical.dat norm.dat outputSimpleODE.dat tempInput.dat ./testSuite/diffResult.dat *.eps *.gch *.gcno simpleODEmyRK4
 echo: 
 	@echo $(OBJ)
 
