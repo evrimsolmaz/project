@@ -2,16 +2,21 @@
 
 This is a scientific application that numerically approximates the solution to differential equationswith GSL.
 
+------------------------------
 
 -Run the following command in Lonestar5 to load the necessary modules:
  module load TACC/1.0 gcc/5.2.0 cray_mpich/7.3.0 gsl/2.2.1 gnuplot/5.0.1 boost/1.59
 
 Note that since the grvy library doesn't exist as a module in Lonestar5, I compiled it in my home directory; the address of which is stated in the makefile.
 
+------------------------------
+
 -How to build:
  Run 'make' to build and then (optionally) 'make check' to run the regression test. It should pass without a problem.
 
 Two executables are created in the make process: chargedParticleMotion and simpleODEmyRK4.
+
+------------------------------
 
 -simpleODEmyRK4 is my implementation of an explicit RK4 solver and it solves the simple first order differential equation y'(x)=y(x) with the initial condition y(0)=1.
 
@@ -55,8 +60,13 @@ Note: For the charged particle motion problem, the error norm is calculated as l
 
 -Performance figures can be plotted by running the commands 'gnuplot plotSimpleODEPrecision-work.plt' and 'gnuplot plotChargedParticlePrecision-work.plt' which will produce .eps files with the same names. In these figures, wall clock time is plotted vs. error norm for each method and problem.
 
+------------------------------
+
 -Running './chargedParticleMotion' and then 'make coverage' will give the code coverage results of the .c file.
+
+------------------------------
 
 -How to clean up:
  Run 'make clean' to delete all executables and files created.
 
+--------------------------------*******************************--------------------------------------
