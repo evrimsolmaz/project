@@ -20,7 +20,6 @@ main (void)
   int debugMode;
   float tolabs;
   float tolrel;
-
   grvy_input_fopen("./input.dat");
 
   if(grvy_input_fread_float("stepSize",&stepSize))

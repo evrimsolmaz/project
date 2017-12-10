@@ -1,5 +1,5 @@
-stepSize = 0.0001	   # step size h
-numberofSteps = 100000	   # step size * number of steps = # of seconds
+stepSize = 0.00001	   # step size h
+numberofSteps = 1000000	   # step size * number of steps = # of seconds
 tolabs = 1e-8		   # absolute error tolerance
 tolrel = 1e-8		   # relative error tolerance
 
@@ -9,6 +9,6 @@ tolrel = 1e-8		   # relative error tolerance
 
 problemNo = 2              # simple ODE with GSL (1), charged particle motion with GSL (2)
 solutionMethod = 1	   # GSL explicit RK4 (1), GSL explicit RK(2,3) (2), GSL explicit RK(8,9) (3)
-verificationMode = 1	   # verification mode off (0), on (1) for charged particle motion problem
+verificationMode = 0	   # verification mode off (0), on (1) for charged particle motion problem
 debugMode = 1		   # debug mode off (0), on (1)
 
