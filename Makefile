@@ -26,6 +26,7 @@ funcsandjacs.o: funcsandjacs.h
 # Coverage target
 coverage: 
 	gcov $(EXEC).c
+	gcov probsandmethods.c
 # Test target
 check: 
 	cp input.dat tempInput.dat
