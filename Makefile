@@ -16,7 +16,7 @@ COVERAGE:= -fprofile-arcs -ftest-coverage -g
 # Rules
 all: $(EXEC) simpleODEmyRK4
 simpleODEmyRK4: simpleODEmyRK4.c
-	$(CC) -o $@ $^ -lm
+	$(CC) $(COVERAGE) -o $@ $^ -lm
 $(EXEC): $(OBJ)
 	$(CC) -L$(LIB) -L$(GRVY_LIB) $(LDLIBS) $(COVERAGE) -o $@ $^
 $(OBJ): $(SRC)
@@ -27,6 +27,7 @@ funcsandjacs.o: funcsandjacs.h
 coverage: 
 	gcov $(EXEC).c
 	gcov probsandmethods.c
+	gcov simpleODEmyRK4.c
 # Test target
 check: 
 	cp input.dat tempInput.dat
