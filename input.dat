@@ -3,8 +3,6 @@ numberofSteps = 20000	   # step size * number of steps = # of seconds
 tolabs = 1		   # absolute error tolerance
 tolrel = 0		   # relative error tolerance
 
-#Note: tolabs and tolrel are redundant when a fixed step size is being used, which is the case in the solvers of this project.
-
 [options] 
 
 problemNo = 2              # simple ODE with GSL (1), charged particle motion with GSL (2)
