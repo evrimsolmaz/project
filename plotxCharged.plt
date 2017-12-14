@@ -1,11 +1,15 @@
-#set xrange
-#set yrange
 set ticslevel 0
 set key below
 set term eps
 set xlabel "x"
 set ylabel "y"
 set zlabel "z"
+
+reset
+unset border
+unset xtics
+unset ytics
+
 set output 'chargedParticleMotion.eps'
 
 file_exists(file) = system("[ -f '".file."' ] && echo '1' || echo '0'") + 0
